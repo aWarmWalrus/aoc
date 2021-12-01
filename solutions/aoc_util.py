@@ -18,7 +18,7 @@ def getInput(dayNumber):
 
 # Returns test input as an array of ints.
 def getTestInput(dayNumber):
-    testFileName = "test{}.txt".format(dayNumber)
+    testFileName = "../tests/test{}.txt".format(dayNumber)
     with open(testFileName) as f:
         test_lines = list(map(int, f.readlines()))
     return test_lines
