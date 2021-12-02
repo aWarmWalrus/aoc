@@ -9,11 +9,11 @@ def solveA(lines):
         dir, amtStr = line.split(' ')
         amt = int(amtStr)
         if (dir == "forward"):
-            x = x + amt
+            x += amt
         elif (dir == "down"):
-            y = y + amt
+            y += amt
         elif (dir == "up"):
-            y = y - amt
+            y += amt
     return x * y
 
 def solveB(lines):
@@ -24,13 +24,13 @@ def solveB(lines):
         dir, amtStr = line.split(' ')
         amt = int(amtStr)
         if (dir == "forward"):
-            x = x + amt
-            y = y + (aim * amt)
+            x += amt
+            y += aim * amt
         elif (dir == "down"):
-            aim = aim + amt
+            aim += amt
         elif (dir == "up"):
-            aim = aim - amt
-    return y * x
+            aim += amt
+    return x * y
 
 answer(solveA, getInput(day), getTestInput(day), 150, True)
 answer(solveB, getInput(day), getTestInput(day), 900, True)
