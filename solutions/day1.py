@@ -1,6 +1,6 @@
 from aoc_util import *
 
-day_number = 1
+day = 1
 
 def solveA(lines):
     ups = 0
@@ -20,5 +20,5 @@ def solveB(lines):
             ups = ups + 1
     return ups
 
-answer(solveA, getInput(day_number), getTestInput(day_number), 7)
-answer(solveB, getInput(day_number), getTestInput(day_number), 5)
+answer(solveA, getInput(day, True), getTestInput(day, True), 7, True)
+answer(solveB, getInput(day, True), getTestInput(day, True), 5, True)

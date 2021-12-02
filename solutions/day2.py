@@ -1,12 +1,36 @@
 from aoc_util import *
 
-day_number = 2
+day = 2
 
 def solveA(lines):
-    return 0
+    x = 0
+    y = 0
+    for line in lines:
+        dir, amtStr = line.split(' ')
+        amt = int(amtStr)
+        if (dir == "forward"):
+            x = x + amt
+        elif (dir == "down"):
+            y = y + amt
+        elif (dir == "up"):
+            y = y - amt
+    return x * y
 
 def solveB(lines):
-    return 0
+    x = 0
+    y = 0
+    aim = 0
+    for line in lines:
+        dir, amtStr = line.split(' ')
+        amt = int(amtStr)
+        if (dir == "forward"):
+            x = x + amt
+            y = y + (aim * amt)
+        elif (dir == "down"):
+            aim = aim + amt
+        elif (dir == "up"):
+            aim = aim - amt
+    return y * x
 
-answer(solveA, getInput(day_number), getTestInput(day_number), 0)
-answer(solveB, getInput(day_number), getTestInput(day_number), 0)
+answer(solveA, getInput(day), getTestInput(day), 150, True)
+answer(solveB, getInput(day), getTestInput(day), 900, True)
