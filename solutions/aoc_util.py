@@ -25,9 +25,3 @@ def getTestInput(dayNumber, asInts = False):
         if asInts:
             return list(map(int, f.readlines()))
         return [l.strip() for l in f.readlines()]
-
-def getTestInputAsText(dayNumber):
-    testFileName = "../tests/test{}.txt".format(dayNumber)
-    with open(testFileName) as f:
-        test_lines = f.readlines()
-    return test_lines
