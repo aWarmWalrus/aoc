@@ -14,14 +14,11 @@ def answer(ansFn, actualInput, testInput, testAnswer, doActual = False):
 
 # Returns test input as an array of ints.
 def getInput(dayNumber, asInts = False):
-    if asInts:
-        return [int(n) for n in aocd.get_data(day=dayNumber).splitlines()]
-    return [n for n in aocd.get_data(day=dayNumber).splitlines()]
+    data = aocd.get_data(day=dayNumber, year=2021, block=True).splitlines()
+    return [int(n) if asInts else n for n in data]
 
 # Returns test input as an array of ints.
 def getTestInput(dayNumber, asInts = False):
     testFileName = "../tests/test{}.txt".format(dayNumber)
     with open(testFileName) as f:
-        if asInts:
-            return list(map(int, f.readlines()))
-        return [l.strip() for l in f.readlines()]
+        return [int(n) if asInts else n.strip() for n in f.readlines()]

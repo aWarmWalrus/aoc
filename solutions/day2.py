@@ -1,5 +1,15 @@
 from aoc_util import *
 
+"""
+[Day 2 Results]
+  Part 1
+    > time: 00:08:37
+    > rank: 6051
+  Part 2
+    > time: 00:12:31
+    > rank: 5456
+"""
+
 day = 2
 
 def solveA(lines):
@@ -13,7 +23,7 @@ def solveA(lines):
         elif (dir == "down"):
             y += amt
         elif (dir == "up"):
-            y += amt
+            y -= amt
     return x * y
 
 def solveB(lines):
@@ -29,7 +39,7 @@ def solveB(lines):
         elif (dir == "down"):
             aim += amt
         elif (dir == "up"):
-            aim += amt
+            aim -= amt
     return x * y
 
 answer(solveA, getInput(day), getTestInput(day), 150, True)

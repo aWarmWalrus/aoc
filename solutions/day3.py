@@ -1,5 +1,15 @@
 from aoc_util import *
 
+"""
+[Day 3 Results]
+  Part 1
+    > time: 00:07:16
+    > rank: 1511
+  Part 2
+    > time: 00:30:58
+    > rank: 2607
+"""
+
 day = 3
 
 def solveA(lines):
