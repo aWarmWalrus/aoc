@@ -32,10 +32,10 @@ def pointsBetween(p1, p2, doDiag = False):
     elif doDiag:
         # Assume diagonal
         xm = offByOne(p1[0], p2[0])
+        xs = range(p1[0], p2[0] + xm, xm)
         ym = offByOne(p1[1], p2[1])
-        xs = [x for x in range(p1[0],p2[0]+xm,xm)]
-        ys = [y for y in range(p1[1],p2[1]+ym,ym)]
-        return [(x,y) for x,y in zip(xs, ys)]
+        ys = range(p1[1], p2[1] + ym, ym)
+        return zip(xs, ys)
     return []
 
 def solve(lines, doDiags):
