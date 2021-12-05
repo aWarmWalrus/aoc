@@ -20,36 +20,37 @@ def parseLine(line):
     return (int(x1), int(y1)), (int(x2), int(y2))
 
 def pointsBetween(p1, p2, doDiag = False):
+    def offByOne(v1,v2):
+        return -1 if v1 > v2 else 1
+
     if (p1[0] == p2[0]):
-        mod = -1 if p1[1] > p2[1] else 1
-        return [(p1[0], i) for i in range(p1[1],p2[1]+mod, mod)]
+        m = offByOne(p1[1], p2[1])
+        return [(p1[0], i) for i in range(p1[1],p2[1]+m, m)]
     elif (p1[1] == p2[1]):
-        mod = -1 if p1[0] > p2[0] else 1
-        return [(i, p1[1]) for i in range(p1[0],p2[0]+mod, mod)]
+        m = offByOne(p1[0], p2[0])
+        return [(i, p1[1]) for i in range(p1[0],p2[0]+m, m)]
     elif doDiag:
         # Assume diagonal
-        xmod = -1 if p1[0] > p2[0] else 1
-        ymod = -1 if p1[1] > p2[1] else 1
-        xs = [x for x in range(p1[0],p2[0]+xmod,xmod)]
-        ys = [y for y in range(p1[1],p2[1]+ymod,ymod)]
+        xm = offByOne(p1[0], p2[0])
+        ym = offByOne(p1[1], p2[1])
+        xs = [x for x in range(p1[0],p2[0]+xm,xm)]
+        ys = [y for y in range(p1[1],p2[1]+ym,ym)]
         return [(x,y) for x,y in zip(xs, ys)]
     return []
 
-def solveA(lines):
+def solve(lines, doDiags):
     theMap = np.zeros((1000,1000), dtype=int)
     for line in lines:
         p1, p2 = parseLine(line)
-        for px in pointsBetween(p1, p2):
+        for px in pointsBetween(p1, p2, doDiags):
             theMap[px] += 1
     return len(np.argwhere(theMap >= 2))
 
+def solveA(lines):
+    return solve(lines, False)
+
 def solveB(lines):
-    theMap = np.zeros((1000,1000), dtype=int)
-    for line in lines:
-        p1, p2 = parseLine(line)
-        for px in pointsBetween(p1,p2,True):
-            theMap[px] += 1
-    return len(np.argwhere(theMap >= 2))
+    return solve(lines, True)
 
 answer(solveA, getInput(day), getTestInput(day), 5, True)
 answer(solveB, getInput(day), getTestInput(day), 12, True)
