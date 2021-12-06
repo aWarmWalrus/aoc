@@ -1,16 +1,29 @@
 import aocd
 
+def color(txt, color):
+    if color == "green":
+        c = 32
+    elif color == "white":
+        c = 37
+    elif color == "red":
+        c = 31
+    return "\033[1;{};40m{}\033[0;37;40m".format(c, txt)
+
 def debug(msg):
     print("\033[1;32;40m > {}".format(msg))
 
 def answer(ansFn, actualInput, testInput, testAnswer, doActual = False):
     actualAns = ansFn(testInput)
-    print("\033[1;37;40m============================================")
-    print("\033[1;37;40m> [Check tests] Expected: {}  Actual: {}".format(testAnswer, actualAns))
+    print(color("============================================", "white"))
+    print(color("> [Check tests] Expected: {}  Actual: {}"\
+            .format(testAnswer, actualAns), "white"))
     if (testAnswer == actualAns) and doActual:
-        print("\033[1;37;40m>\033[0;37;40m \033[1;32;40m[Test passed] \033[0;32;40mAnswer: {}".format(ansFn(actualInput)))
+        print(color("> ", "white") + \
+            color("[Test passed] ", "green") + \
+            color("Answer: {}".format(ansFn(actualInput)), "white"))
     else:
-        print("\033[1;37;40m>\033[0;37;40m \033[1;31;40m[Test failed]")
+        print(color("> ", "white") + \
+            color("[Test failed] ", "red"))
 
 # Returns test input as an array of ints.
 def getInput(dayNumber, asInts = False):

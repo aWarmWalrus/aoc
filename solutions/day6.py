@@ -15,19 +15,19 @@ import numpy as np
 day = 6
 
 def solveA(lines, days=80):
-    state = defaultdict(int)
+    state = np.zeros(9, dtype=np.longlong)
     for i in list(map(int, lines[0].split(','))):
         state[i] += 1
     for _ in range(days):
-        newState = defaultdict(int)
-        for k, v in state.items():
+        newState = np.zeros(9, dtype=np.longlong)
+        for k in range(len(state)):
             if (k == 0):
-                newState[8] += v
-                newState[6] += v
+                newState[8] += state[k]
+                newState[6] += state[k]
             else:
-                newState[k-1] += v
+                newState[k-1] += state[k]
         state = newState
-    return sum(state.values())
+    return sum(state)
 
 def solveB(lines):
     return solveA(lines, 256)
