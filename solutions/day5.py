@@ -44,7 +44,7 @@ def solve(lines, doDiags):
         p1, p2 = parseLine(line)
         for px in pointsBetween(p1, p2, doDiags):
             theMap[px] += 1
-    return len(np.argwhere(theMap >= 2))
+    return np.count_nonzero(theMap >= 2)
 
 def solveA(lines):
     return solve(lines, False)
