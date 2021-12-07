@@ -12,15 +12,48 @@ def color(txt, color):
 def debug(msg):
     print("\033[1;32;40m > {}".format(msg))
 
+def checkAndSubmit(day, ansFn, expectedOut, part):
+    testInput = getTestInput(day)
+    testOut = ansFn(testInput)
+    fullInput = getInput(day)
+    print(color("> [Check tests] Expected: {}  Actual: {}"\
+            .format(expectedOut, testOut), "white"))
+    if (expectedOut == testOut):
+        answer = ansFn(fullInput)
+        print(color("> ", "white") + \
+            color("[Test passed] ", "green") + \
+            color("Answer: {}".format(answer), "white"))
+        print(color("> [Submitting] ", "white"), end="")
+        aocd.submit(answer, part, day=day, year=2021)
+        return True
+    else:
+        print(color("> ", "white") + \
+            color("[Test failed] ", "red"))
+        return False
+
+
+def answerAndSubmit(day, ansFnA, ansFnB, expectedOutputA, expectedOutputB=None):
+    print(color("> Part A ======================================", "white"))
+    if not checkAndSubmit(day, ansFnA, expectedOutputA, "a"):
+        return
+
+    if expectedOutputB == None:
+        return
+
+    print(color("> Part B ======================================", "white"))
+    checkAndSubmit(day, ansFnB, expectedOutputB, "b")
+
+
 def answer(ansFn, actualInput, testInput, testAnswer, doActual = False):
     actualAns = ansFn(testInput)
     print(color("============================================", "white"))
     print(color("> [Check tests] Expected: {}  Actual: {}"\
             .format(testAnswer, actualAns), "white"))
     if (testAnswer == actualAns) and doActual:
+        answer = ansFn(actualInput)
         print(color("> ", "white") + \
             color("[Test passed] ", "green") + \
-            color("Answer: {}".format(ansFn(actualInput)), "white"))
+            color("Answer: {}".format(answer), "white"))
     else:
         print(color("> ", "white") + \
             color("[Test failed] ", "red"))

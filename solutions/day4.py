@@ -75,5 +75,4 @@ def solveB(lines):
             most = moves
     return winningBoard
 
-answer(solveA, getInput(day), getTestInput(day), 4512, True)
-answer(solveB, getInput(day), getTestInput(day), 1924, True)
+answerAndSubmit(day, solveA, solveB, 4512, 1924)

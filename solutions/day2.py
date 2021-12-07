@@ -42,5 +42,4 @@ def solveB(lines):
             aim -= amt
     return x * y
 
-answer(solveA, getInput(day), getTestInput(day), 150, True)
-answer(solveB, getInput(day), getTestInput(day), 900, True)
+answerAndSubmit(day, solveA, solveB, 150, 900)

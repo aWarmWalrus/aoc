@@ -32,5 +32,4 @@ def solveA(lines, days=80):
 def solveB(lines):
     return solveA(lines, 256)
 
-answer(solveA, getInput(day), getTestInput(day), 5934, True)
-answer(solveB, getInput(day), getTestInput(day), 26984457539, True)
+answerAndSubmit(day, solveA, solveB, 5934, 26984457539)

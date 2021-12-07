@@ -60,5 +60,4 @@ def solveB(lines):
         return 0
     return getRating(lines, False) * getRating(lines, True)
 
-answer(solveA, getInput(day), getTestInput(day), 198, True)
-answer(solveB, getInput(day), getTestInput(day), 230, True)
+answerAndSubmit(day, solveA, solveB, 198, 230)

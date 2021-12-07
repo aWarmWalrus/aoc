@@ -1,5 +1,6 @@
 from aoc_util import *
 import numpy as np
+from functools import partial
 
 """
 [Day 7 Results]
@@ -13,11 +14,18 @@ import numpy as np
 
 day = 7
 
+def solve(lines, gasFn):
+    crabs = np.array(list(map(int, lines[0].split(','))), dtype=int)
+    return min(map(lambda i : sum(map(partial(gasFn, i), crabs)), \
+                range(np.amax(crabs))))
+
 def solveA(lines):
-    return 0
+    return solve(lines, lambda i, x: abs(x - i))
 
 def solveB(lines):
-    return 0
+    def cumulativeDiff(i, x):
+        d = abs(x - i)
+        return int(d * (d + 1) / 2)
+    return solve(lines, cumulativeDiff)
 
-answer(solveA, getInput(day), getTestInput(day), 0, False)
-answer(solveB, getInput(day), getTestInput(day), 0, False)
+answerAndSubmit(day, solveA, solveB, 37, 168)

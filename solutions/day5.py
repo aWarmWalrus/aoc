@@ -52,5 +52,4 @@ def solveA(lines):
 def solveB(lines):
     return solve(lines, True)
 
-answer(solveA, getInput(day), getTestInput(day), 5, True)
-answer(solveB, getInput(day), getTestInput(day), 12, True)
+answerAndSubmit(day, solveA, solveB, 5, 12)
