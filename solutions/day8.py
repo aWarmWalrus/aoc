@@ -19,6 +19,12 @@ def parseLine(line):
     p, o = line.split(" | ")
     return p.split(" "), o.split(" ")
 
+def debugDict(dic):
+    debug("{")
+    for k, v in sorted(dic.items()):
+        debug("  {} -> {}".format(k, v))
+    debug("}")
+
 def solveA(lines):
     total = 0
     for line in lines:
@@ -37,45 +43,32 @@ len 5: 2, 3, 5
 len 6: 0, 6, 9
 len 7: 8
 
-Frequency of a segment across all the digits
-a = 8 (solved)
-b = 6 (solved)
-c = 8 (solved)
+Frequency of each segment across all the digits
+a = 8 (solved by diffing 7 (acf) and 1 (cf))
+b = 6 (unique)
+c = 8 (unique, aside from a)
 d = 7
-e = 4 (solved)
-f = 9 (solved)
+e = 4 (unique)
+f = 9 (unique)
 g = 7
 """
-
-TWO = "acdeg"
-THREE = "acdfg"
-FIVE = "abdfg"
-SIX = "abdefg"
-NINE = "abcdfg"
-ZERO = "abcefg"
-
-def debugDict(dic):
-    debug("{")
-    for k, v in sorted(dic.items()):
-        debug("  {} -> {}".format(k, v))
-    debug("}")
-
 def decodeWord(word, decoder):
-    if len(word) == 2:
-        return "1"
-    if len(word) == 3:
-        return "7"
-    if len(word) == 4:
-        return "4"
-    if len(word) == 7:
-        return "8"
+    lengthToNumber = {2: "1", 3: "7", 4: "4", 7: "8"}
+    if len(word) in lengthToNumber.keys():
+        return lengthToNumber[len(word)]
 
     display = ""
     for c in word:
         display += decoder[c]
     corrected = "".join(sorted(display))
 
-    displayToNumber = {TWO: "2", THREE: "3", FIVE: "5", SIX: "6", NINE: "9", ZERO: "0"}
+    two = "acdeg"
+    three = "acdfg"
+    five = "abdfg"
+    six = "abdefg"
+    nine = "abcdfg"
+    zero = "abcefg"
+    displayToNumber = {two: "2", three: "3", five: "5", six: "6", nine: "9", zero: "0"}
 
     return displayToNumber[corrected]
 
@@ -101,43 +94,38 @@ def solveB(lines):
             if not i in scrambled[1]:
                 decoder[i] = "a"
 
-        # Get the signals that have unique occurrence frequencys.
-        # These are |b, c, e, and f| which occur 6, 8, 4, and 9 times
-        # respectively across the digits. 'a' also occurs 8 times, but we just
-        # solved that.
+        # Get the signals that have unique occurrence frequencys. These would be
+        # |b, c, e, and f| which occur 6, 8, 4, and 9 times respectively.
+        # 'a' also occurs 8 times, but we just solved that.
         frequencies = Counter("".join(preamble))
-        for k, count in sorted(frequencies.items()):
+        for signal, count in sorted(frequencies.items()):
             if (count == 6):
-                decoder[k] = "b"
+                decoder[signal] = "b"
             elif (count == 4):
-                decoder[k] = "e"
-            elif (count == 8) and decoder[k] == "":
-                decoder[k] = "c"
+                decoder[signal] = "e"
+            elif (count == 8) and decoder[signal] == "":
+                decoder[signal] = "c"
             elif (count == 9):
-                decoder[k] = "f"
+                decoder[signal] = "f"
 
         # Get 'd' by finding the segment of 4 that hasn't been decoded yet.
-        # In other words, 4 is made of four segments: |b c d f|. We should have
-        # found |b c f| in the step above. So the signal in our scrambled 4 that
-        # isn't mapped yet must map to the last segment, 'd'.
+        # In other words, 4 is made of four segments: |b c d f|. We just solved
+        # |b c f| above. So the last signal in our scrambled 4 that isn't solved
+        # yet must map to 4's last segment, 'd'.
         for c in scrambled[4]:
             if c not in decoder.keys():
                 decoder[c] = "d"
                 break
 
-        # Finally, 'g' is the last segment that we need to map to. By process of
-        # elimination, the only letter that isn't mapped yet must map to 'g'.
+        # Finally, 'g' is the last segment that we need to solve. By process of
+        # elimination, the one letter that isn't in our decoder must map to 'g'.
         for i in "abcdefg":
             if i not in decoder.keys():
                 decoder[i] = "g"
                 break
 
         # Decode.
-        correctValue = ""
-        for word in output:
-            correctValue += str(decodeWord(word, decoder))
-
-        total += int(correctValue)
+        total += int("".join([decodeWord(word, decoder) for word in output]))
 
     return total
 

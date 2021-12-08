@@ -9,38 +9,36 @@ def color(txt, color):
         c = 31
     return "\033[1;{};40m{}\033[0;37;40m".format(c, txt)
 
-def debug(msg):
-    print("\033[1;32;40m > {}".format(msg))
+def debug(msg, end="\n"):
+    print(color(" > ", "white") + "{}".format(msg), end=end)
 
 def checkAndSubmit(day, ansFn, expectedOut, part):
     testInput = getTestInput(day)
     testOut = ansFn(testInput)
     fullInput = getInput(day)
-    print(color("> [Check tests] Expected: {}  Actual: {}"\
+    debug(color("[Check tests] Expected: {}  Actual: {}"\
             .format(expectedOut, testOut), "white"))
     if (expectedOut == testOut):
         answer = ansFn(fullInput)
-        print(color("> ", "white") + \
-            color("[Test passed] ", "green") + \
+        debug(color("[Test passed] ", "green") + \
             color("Answer: {}".format(answer), "white"))
-        print(color("> [Submitting] ", "white"), end="")
+        debug(color("[Submitting] ", "white"), end="")
         aocd.submit(answer, part, day=day, year=2021)
         return True
     else:
-        print(color("> ", "white") + \
-            color("[Test failed] ", "red"))
+        debug(color("[Test failed] ", "red"))
         return False
 
 
 def answerAndSubmit(day, ansFnA, ansFnB, expectedOutputA, expectedOutputB=None):
-    print(color("> Part A ======================================", "white"))
+    debug(color("Part A ======================================", "white"))
     if not checkAndSubmit(day, ansFnA, expectedOutputA, "a"):
         return
 
     if expectedOutputB == None:
         return
 
-    print(color("> Part B ======================================", "white"))
+    debug(color("Part B ======================================", "white"))
     checkAndSubmit(day, ansFnB, expectedOutputB, "b")
 
 
