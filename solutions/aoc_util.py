@@ -44,27 +44,12 @@ def answerAndSubmit(day, ansFnA, ansFnB, expectedOutputA, expectedOutputB=None):
     checkAndSubmit(day, ansFnB, expectedOutputB, "b")
 
 
-def answer(ansFn, actualInput, testInput, testAnswer, doActual = False):
-    actualAns = ansFn(testInput)
-    print(color("============================================", "white"))
-    print(color("> [Check tests] Expected: {}  Actual: {}"\
-            .format(testAnswer, actualAns), "white"))
-    if (testAnswer == actualAns) and doActual:
-        answer = ansFn(actualInput)
-        print(color("> ", "white") + \
-            color("[Test passed] ", "green") + \
-            color("Answer: {}".format(answer), "white"))
-    else:
-        print(color("> ", "white") + \
-            color("[Test failed] ", "red"))
+# Returns test input as an array of ints.
+def getInput(dayNumber):
+    return aocd.get_data(day=dayNumber, year=2021, block=True).splitlines()
 
 # Returns test input as an array of ints.
-def getInput(dayNumber, asInts = False):
-    data = aocd.get_data(day=dayNumber, year=2021, block=True).splitlines()
-    return [int(n) if asInts else n for n in data]
-
-# Returns test input as an array of ints.
-def getTestInput(dayNumber, asInts = False):
+def getTestInput(dayNumber):
     testFileName = "../tests/test{}.txt".format(dayNumber)
     with open(testFileName) as f:
-        return [int(n) if asInts else n.strip() for n in f.readlines()]
+        return [n.strip() for n in f.readlines()]

@@ -5,19 +5,18 @@ from functools import partial
 """
 [Day 7 Results]
   Part 1
-    > time:
-    > rank:
+    > time: 00:07:10
+    > rank: 2860
   Part 2
-    > time:
-    > rank:
+    > time: 00:09:17
+    > rank: 1500
 """
 
 day = 7
 
 def solve(lines, gasFn):
-    crabs = np.array(list(map(int, lines[0].split(','))), dtype=int)
-    return min(map(lambda i : sum(map(partial(gasFn, i), crabs)), \
-                range(np.amax(crabs))))
+    crabs = list(map(int, lines[0].split(',')))
+    return min(map(lambda i : sum(map(partial(gasFn, i), crabs)), range(max(crabs))))
 
 def solveA(lines):
     return solve(lines, lambda i, x: abs(x - i))
