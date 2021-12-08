@@ -56,11 +56,7 @@ def decodeWord(word, decoder):
     lengthToNumber = {2: "1", 3: "7", 4: "4", 7: "8"}
     if len(word) in lengthToNumber.keys():
         return lengthToNumber[len(word)]
-
-    display = ""
-    for c in word:
-        display += decoder[c]
-    corrected = "".join(sorted(display))
+    corrected = "".join(sorted([decoder[c] for c in word]))
 
     two = "acdeg"
     three = "acdfg"
@@ -69,7 +65,6 @@ def decodeWord(word, decoder):
     nine = "abcdfg"
     zero = "abcefg"
     displayToNumber = {two: "2", three: "3", five: "5", six: "6", nine: "9", zero: "0"}
-
     return displayToNumber[corrected]
 
 def solveB(lines):
