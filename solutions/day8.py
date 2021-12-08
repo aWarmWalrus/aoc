@@ -37,8 +37,8 @@ len 5: 2, 3, 5
 len 6: 0, 6, 9
 len 7: 8
 
-Number of occurrences of a signal for each digit (0-9)
-a = solved
+Frequency of a segment across all the digits
+a = 8 (solved)
 b = 6 (solved)
 c = 8 (solved)
 d = 7
