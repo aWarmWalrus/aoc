@@ -39,7 +39,7 @@ def solveB(lines):
         symStack = []
         corrupted = False
         for c in line:
-            if c in ["[", "(", "<", "{"]:
+            if c in OPENERS:
                 symStack.append(c)
             elif symStack.pop() != MATCHING[c]:
                 corrupted = True
