@@ -1,5 +1,6 @@
 from aoc_util import *
 import numpy as np
+import cProfile
 from collections import defaultdict
 from collections import Counter
 from collections import deque
@@ -62,11 +63,30 @@ def numPathsIter(g):
     return numPaths
 
 
-def solveA(lines):
-    # return numPaths(parseLines(lines), "start", [])
-    return numPathsIter(parseLines(lines))
+def solveA(lines, useRecursive = False):
+    return numPaths(parseLines(lines), "start", []) if useRecursive else numPathsIter(parseLines(lines))
 
 def solveB(lines):
     return numPathsB(parseLines(lines), "start", [], False)
 
 answerAndSubmit(day, solveA, solveB, 10, 36)
+
+input = getInput(day)
+times = 100
+
+debug("PROFILING: Iterative path-preserving BFS solution")
+pr1 = cProfile.Profile()
+pr1.enable()
+for i in range(times):
+    numPathsIter(parseLines(input))
+pr1.disable()
+pr1.print_stats(sort="time")
+
+debug("PROFILING: Recursive path-preserving DFS solution")
+pr2 = cProfile.Profile()
+pr2.enable()
+for i in range(times):
+    numPaths(parseLines(input), "start", [])
+pr2.disable()
+
+pr2.print_stats(sort="time")
