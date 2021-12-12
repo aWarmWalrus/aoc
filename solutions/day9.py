@@ -56,15 +56,14 @@ def solveB(lines):
     heatmap = parseMap(lines)
     basinSizes = []
     for coord in getLows(heatmap):
-        # do bfs until you see a 9 or out of bounds.
+        # do dfs until you see a 9 or out of bounds.
         goto = [coord]
         visited = []
         while len(goto) > 0:
             next = goto.pop()
             visited.append(next)
             filter = lambda p: heatmap[p] < 9 and p not in visited + goto
-            adj = neighbors(next, heatmap.shape, filterFn=filter)
-            goto += adj
+            goto += neighbors(next, heatmap.shape, filterFn=filter)
         basinSizes.append(len(visited))
 
     largest = sorted(basinSizes, reverse=True)[0:3]

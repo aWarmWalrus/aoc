@@ -72,7 +72,7 @@ def solveB(lines):
         # Step 3: every octopus that flashed gets set to 0.
         octos[flashed] = 0
         if flashed[1:-1, 1:-1].all():
-            return s
+            return s + 1
         totalFlashes += flashed.sum()
 
     return 0
