@@ -10,11 +10,11 @@ from statistics import median
 """
 [Day 12 Results]
   Part 1
-    > time:
-    > rank:
+    > time: 00:34:18
+    > rank: 3126
   Part 2
-    > time:
-    > rank:
+    > time: 01:01:34
+    > rank: 3458
 """
 
 day = 12

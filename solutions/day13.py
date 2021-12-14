@@ -2,19 +2,17 @@ from aoc_util import *
 import numpy as np
 import cProfile
 from collections import defaultdict
-from collections import Counter
 from collections import deque
 from functools import partial
-from statistics import median
 
 """
-[Day 12 Results]
+[Day 13 Results]
   Part 1
-    > time:
-    > rank:
+    > time: 00:31:10
+    > rank: 3417
   Part 2
-    > time:
-    > rank:
+    > time: 00:28:46
+    > rank: 871
 """
 
 day = 13
