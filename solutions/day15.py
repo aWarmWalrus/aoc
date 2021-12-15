@@ -27,7 +27,7 @@ def getNeighbors(coord, m):
     for ne in ns:
         nx = coord[0] + ne[0]
         ny = coord[1] + ne[1]
-        if m[nx,ny] < 999:
+        if m[nx,ny] < 99999:
             neighbors.appendleft((nx,ny))
     return neighbors
 
@@ -50,20 +50,16 @@ def dijsktra(g):
     return riskMap[g.shape]
 
 def solveA(lines, optimal=False):
-    oGrid = parseLines(lines)
     return dijsktra(parseLines(lines))
 
-def generateFullGrid(grid):
+def solveB(lines):
+    grid = parseLines(lines)
     gX, gY = grid.shape
     newGrid = np.zeros((gX * 5, gY * 5), dtype=int)
     for i in range(5):
         for j in range(5):
             newSection = (grid + i + j - 1) % 9 + 1
             newGrid[gX * i : gX * (i + 1), gY * j : gY * (j + 1)] = newSection
-    return newGrid
-
-def solveB(lines):
-    oGrid = generateFullGrid(parseLines(lines))
-    return dijsktra(oGrid)
+    return dijsktra(newGrid)
 
 answerAndSubmit(day, solveA, solveB, 40, 315)
