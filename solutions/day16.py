@@ -1,3 +1,4 @@
+import math
 from bitstring import BitArray
 from aoc_util import *
 
@@ -13,28 +14,28 @@ from aoc_util import *
 
 day = 16
 
-def doOperation(typeId, literals):
-    if typeId == 0:
-        return sum(literals)
-    elif typeId == 1:
-        result = 1
-        for i in literals:
-            result *= i
-        return result
-    elif typeId == 2:
-        return min(literals)
-    elif typeId == 3:
-        return max(literals)
-    elif typeId == 5:
-        return 1 if literals[0] > literals[1] else 0
-    elif typeId == 6:
-        return 1 if literals[0] < literals[1] else 0
-    elif typeId == 7:
-        return 1 if literals[0] == literals[1] else 0
-    raise Error("Invalid type: " + str(type))
+
+def debugType(typeId):
+    return {0: "SUM",
+            1: "PROD",
+            2: "MIN",
+            3: "MAX",
+            5: "GREATER THAN",
+            6: "LESS THAN",
+            7: "EQUALS TO"}[typeId]
 
 
-def parseLiteralPacket(bin):
+def operate(typeId, literals):
+    return {0: lambda l : sum(literals),
+                 1: lambda l : math.prod(literals),
+                 2: lambda l : min(literals),
+                 3: lambda l : max(literals),
+                 5: lambda l : 1 if literals[0] > literals[1] else 0,
+                 6: lambda l : 1 if literals[0] < literals[1] else 0,
+                 7: lambda l : 1 if literals[0] == literals[1] else 0}[typeId](literals)
+
+
+def parseLiteralPacket(bin, level):
     version = int(bin[0:3], 2)
     typeId = int(bin[3:6], 2)
     iter = 6
@@ -45,13 +46,15 @@ def parseLiteralPacket(bin):
             oneMore = False
         nums += bin[iter+1:iter+5]
         iter += 5
+    debug("{}literal: {}".format("  " * level, int(nums,2)))
     return version, iter, int(nums, 2)
 
 
-def parseOperatorPacket(bin):
+def parseOperatorPacket(bin, level):
     version = int(bin[0:3], 2)
     typeId = int(bin[3:6], 2)
     assert(typeId != 4)
+    debug("{}operator packet: {} <".format("  " * level, debugType(typeId)))
 
     versions = version
     literals = []
@@ -63,7 +66,7 @@ def parseOperatorPacket(bin):
         lengthTraveled = 0
         iter = 22
         while (lengthTraveled < totalLength):
-            v, length, ans = parsePacket(bin[iter:])
+            v, length, ans = parsePacket(bin[iter:], level + 1)
             versions += v
             lengthTraveled += length
             iter += length
@@ -73,21 +76,23 @@ def parseOperatorPacket(bin):
         subpacketsProcessed = 0
         iter = 18
         while (subpacketsProcessed < totalSubs):
-            v, length, ans = parsePacket(bin[iter:])
+            v, length, ans = parsePacket(bin[iter:], level + 1)
             versions += v
             subpacketsProcessed += 1
             iter += length
             literals.append(ans)
+    result = operate(typeId, literals)
+    debug("{}> {} result: {}".format("  " * level, debugType(typeId), result))
 
-    return versions, iter, doOperation(typeId, literals)
+    return versions, iter, operate(typeId, literals)
 
 
-def parsePacket(bin):
+def parsePacket(bin, level=0):
     typeId = int(bin[3:6], 2)
     if typeId == 4:
-        return parseLiteralPacket(bin)
+        return parseLiteralPacket(bin, level)
     else:
-        return parseOperatorPacket(bin)
+        return parseOperatorPacket(bin, level)
 
 
 def solveA(lines, optimal=False):
