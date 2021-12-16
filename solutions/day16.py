@@ -27,12 +27,12 @@ def debugType(typeId):
 
 def operate(typeId, literals):
     return {0: lambda l : sum(literals),
-                 1: lambda l : math.prod(literals),
-                 2: lambda l : min(literals),
-                 3: lambda l : max(literals),
-                 5: lambda l : 1 if literals[0] > literals[1] else 0,
-                 6: lambda l : 1 if literals[0] < literals[1] else 0,
-                 7: lambda l : 1 if literals[0] == literals[1] else 0}[typeId](literals)
+            1: lambda l : math.prod(literals),
+            2: lambda l : min(literals),
+            3: lambda l : max(literals),
+            5: lambda l : 1 if literals[0] > literals[1] else 0,
+            6: lambda l : 1 if literals[0] < literals[1] else 0,
+            7: lambda l : 1 if literals[0] == literals[1] else 0}[typeId](literals)
 
 
 def parseLiteralPacket(bin, level):
