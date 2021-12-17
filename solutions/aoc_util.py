@@ -1,5 +1,7 @@
 import aocd
 
+PRINT_DEBUG = True
+
 def color(txt, color):
     if color == "green":
         c = 32
@@ -10,35 +12,61 @@ def color(txt, color):
     return "\033[1;{};40m{}\033[0;37;40m".format(c, txt)
 
 def debug(msg, end="\n"):
-    print(color(" > ", "white") + "{}".format(msg), end=end)
+    if PRINT_DEBUG:
+        print(color(" > ", "white") + "{}".format(msg), end=end)
 
 def checkAndSubmit(day, ansFn, expectedOut, part):
     testInput = getTestInput(day)
+    if (type(expectedOut) == list):
+        print(color("[Check tests] Multiple test cases", "white"))
+        if len(expectedOut) == 0:
+            print(color("  No test cases provided", "red"))
+            return False
+        if len(expectedOut) != len(testInput):
+            print(color("  {} tests provided does not match {} expectations provided"\
+                .format(len(testInput), len(expectedOut)), "red"))
+            return False
+
+        numFailed = 0
+        for i in range(len(testInput)):
+            testOut = ansFn(testInput[i].strip())
+            print(color("  Test {}:  Expected: {}  Actual: {}"\
+                    .format(i, expectedOut[i], testOut), "white" if expectedOut[i] == testOut else "red"))
+            if expectedOut[i] != testOut:
+                numFailed += 1
+        if numFailed > 0:
+            print(color("[Tests failed]: {} cases failed".format(numFailed), "red"))
+            return False
+
+        print(color("[Tests passed] :)", "green"))
+        return True
+
     testOut = ansFn(testInput)
     fullInput = getInput(day)
-    debug(color("[Check tests] Expected: {}  Actual: {}"\
+    print(color("[Check tests]  Expected: {}  Actual: {}"\
             .format(expectedOut, testOut), "white"))
+
     if (expectedOut == testOut):
         answer = ansFn(fullInput)
-        debug(color("[Test passed] ", "green") + \
+        print(color("[Test passed] ", "green") + \
             color("Answer: {}".format(answer), "white"))
-        debug(color("[Submitting] ", "white"), end="")
+        print(color("[Submitting] ", "white"), end="")
         aocd.submit(answer, part, day=day, year=2021)
         return True
     else:
-        debug(color("[Test failed] ", "red"))
+        print(color("[Test failed] ", "red"))
         return False
 
 
 def answerAndSubmit(day, ansFnA, ansFnB, expectedOutputA, expectedOutputB=None):
-    debug(color("Part A ======================================", "white"))
+    print(color("Part A ======================================", "white"))
     if not checkAndSubmit(day, ansFnA, expectedOutputA, "a"):
         return
 
     if expectedOutputB == None:
         return
 
-    debug(color("Part B ======================================", "white"))
+    print(color("Part B ======================================", "white"))
     checkAndSubmit(day, ansFnB, expectedOutputB, "b")
 
 
