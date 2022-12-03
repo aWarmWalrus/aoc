@@ -16,7 +16,7 @@ def writeStats():
         return
     print("Getting stats: ", time.ctime())
 
-    url = URL.format(year = "2021")
+    url = URL.format(year = "2022")
     response = requests.get(url)
 
     parser = AOCStats()

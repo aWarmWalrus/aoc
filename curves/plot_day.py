@@ -20,7 +20,7 @@ def deltas(xs):
 day = sys.argv[1]
 
 def animation(i):
-    filename = "file:///C:/Users/awarm/Projects/AdventOfCode2021/curves/data/day{}.csv".format(day)
+    filename = "file:///C:/Users/awarm/Documents/GitHub/aoc/curves/data/day{}.csv".format(day)
     data = pd.read_csv(filename)  #, skiprows=lambda x: x%6!=0)
     if i == 0:
         return

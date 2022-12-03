@@ -14,6 +14,7 @@ from datetime import tzinfo
 from threading import Timer
 from html.parser import HTMLParser
 
+YEAR = 2022
 URL = "https://adventofcode.com/{year}/stats"
 
 def secondsSinceRelease(day):
@@ -44,12 +45,12 @@ def writeStats(day):
         print("Time until next read: {}".format(timeLeft), end='\r')
         return
 
-    url = URL.format(year = "2021")
+    url = URL.format(year = YEAR)
     response = requests.get(url)
 
     parser = AOCStats()
     parser.feed(response.text)
-    filename = "data/day{}.csv".format(day)
+    filename = "data/{}/day{}.csv".format(YEAR, day)
     with open(filename, "a") as f:
         data = parser.getData()
         line = "{},{},{}\n".format(int(seconds / 60), data[day]["both"], data[day]["firstOnly"])

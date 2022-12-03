@@ -1,6 +1,10 @@
 import aocd
+import logging
 
 PRINT_DEBUG = True
+YEAR = 2022
+
+logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
 
 def color(txt, color):
     if color == "green":
@@ -51,7 +55,7 @@ def checkAndSubmit(day, ansFn, expectedOut, part):
         print(color("[Test passed] ", "green") + \
             color("Answer: {}".format(answer), "white"))
         print(color("[Submitting] ", "white"), end="")
-        aocd.submit(answer, part, day=day, year=2021)
+        aocd.submit(answer, part, day=day, year=YEAR)
         return True
     else:
         print(color("[Test failed] ", "red"))
@@ -72,10 +76,11 @@ def answerAndSubmit(day, ansFnA, ansFnB, expectedOutputA, expectedOutputB=None):
 
 # Returns test input as an array of ints.
 def getInput(dayNumber):
-    return aocd.get_data(day=dayNumber, year=2021, block=True).splitlines()
+    print("Getting input {} {}".format(dayNumber, YEAR))
+    return aocd.get_data(day=dayNumber, year=2022, block=True).splitlines()
 
 # Returns test input as an array of ints.
 def getTestInput(dayNumber):
-    testFileName = "../tests/test{}.txt".format(dayNumber)
+    testFileName = "tests/test{}.txt".format(dayNumber)
     with open(testFileName) as f:
         return [n.strip() for n in f.readlines()]
