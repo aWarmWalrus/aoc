@@ -1,15 +1,10 @@
 from aoc_util import *
 
-import heapq
-
 """
-[Day 1 Results]
-  Part 1
-    > time:
-    > rank:
-  Part 2
-    > time:
-    > rank:
+Personal Stats:
+      --------Part 1---------   --------Part 2---------
+Day       Time    Rank  Score       Time    Rank  Score
+  1       >24h  160923      0       >24h  154818      0
 """
 
 day = 1

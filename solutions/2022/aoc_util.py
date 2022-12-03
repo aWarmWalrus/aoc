@@ -17,7 +17,7 @@ def color(txt, color):
 
 def debug(msg, end="\n"):
     if PRINT_DEBUG:
-        print(color(" > ", "white") + "{}".format(msg), end=end)
+        print(color(" > {}".format(msg), "white"), end=end)
 
 def checkAndSubmit(day, ansFn, expectedOut, part):
     testInput = getTestInput(day)
@@ -75,9 +75,8 @@ def answerAndSubmit(day, ansFnA, ansFnB, expectedOutputA, expectedOutputB=None):
 
 
 # Returns test input as an array of ints.
-def getInput(dayNumber):
-    print("Getting input {} {}".format(dayNumber, YEAR))
-    return aocd.get_data(day=dayNumber, year=2022, block=True).splitlines()
+def getInput(day):
+    return aocd.get_data(day=day, year=YEAR, block=True).splitlines()
 
 # Returns test input as an array of ints.
 def getTestInput(dayNumber):

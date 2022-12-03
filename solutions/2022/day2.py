@@ -1,13 +1,10 @@
 from aoc_util import *
 
 """
-[Day 2 Results]
-  Part 1
-    > time:
-    > rank:
-  Part 2
-    > time:
-    > rank:
+Personal Stats:
+      --------Part 1---------   --------Part 2---------
+Day       Time    Rank  Score       Time    Rank  Score
+  2       >24h  121878      0       >24h  115882      0
 """
 
 day = 2
