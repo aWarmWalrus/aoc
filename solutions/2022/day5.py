@@ -28,7 +28,6 @@ def solveA(lines):
             break
         cratesIndex += 1
     stacks = parseCrates(lines[:cratesIndex])
-    print(stacks)
     for l in lines[cratesIndex+2:]:
         m, num, f, fromNum, t, toNum = l.split(' ')
         amt = int(num)
@@ -37,10 +36,9 @@ def solveA(lines):
 
         for i in range(amt):
             stacks[dst].append(stacks[src].pop())
-    tops = "".join([s.pop() for s in list(sorted(stacks.items))])
-    # for _, stack in sorted(stacks.items()):
-    #     tops += stack.pop()
-    # print(stacks)
+    tops = ""
+    for _, stack in sorted(stacks.items()):
+        tops += stack.pop()
     return tops
 
 def solveB(lines):
@@ -50,7 +48,6 @@ def solveB(lines):
             break
         cratesIndex += 1
     stacks = parseCrates(lines[:cratesIndex])
-    print(stacks)
     for l in lines[cratesIndex+2:]:
         m, num, f, fromNum, t, toNum = l.split(' ')
         amt = int(num)
@@ -65,7 +62,6 @@ def solveB(lines):
     tops = ""
     for _, stack in sorted(stacks.items()):
         tops += stack.pop()
-    print(stacks)
     return tops
 
 answerAndSubmit(day, solveA, solveB, "CMZ", "MCD")
