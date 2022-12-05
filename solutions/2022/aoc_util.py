@@ -4,7 +4,7 @@ import logging
 PRINT_DEBUG = True
 YEAR = 2022
 
-logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
+# logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
 
 def color(txt, color):
     if color == "green":
@@ -82,4 +82,4 @@ def getInput(day):
 def getTestInput(dayNumber):
     testFileName = "tests/test{}.txt".format(dayNumber)
     with open(testFileName) as f:
-        return [n.strip() for n in f.readlines()]
+        return [n for n in f.readlines()]
