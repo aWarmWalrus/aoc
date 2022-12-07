@@ -29,4 +29,5 @@ def solveB(lines):
             tot += 1
     return tot
 
-answerAndSubmit(day, solveA, solveB, 3, 5)
+if __name__ == "__main__":
+    answerAndSubmit(day, solveA, solveB, 3, 5)

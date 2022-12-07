@@ -28,4 +28,5 @@ def groupPriority(sacks):
 def solveB(lines):
     return sum([groupPriority(lines[i:i+3]) for i in range(0, len(lines), 3)])
 
-answerAndSubmit(day, solveA, solveB, 157, 70)
+if __name__ == "__main__":
+    answerAndSubmit(day, solveA, solveB, 157, 70)

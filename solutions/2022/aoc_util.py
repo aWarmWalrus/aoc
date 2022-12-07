@@ -4,8 +4,6 @@ import logging
 PRINT_DEBUG = True
 YEAR = 2022
 
-# logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
-
 def color(txt, color):
     if color == "green":
         c = 32
@@ -19,8 +17,8 @@ def debug(msg, end="\n"):
     if PRINT_DEBUG:
         print(color(" > {}".format(msg), "white"), end=end)
 
-def checkAndSubmit(day, ansFn, expectedOut, part):
-    testInput = getTestInput(day)
+def checkAndSubmit(day, ansFn, expectedOut, part, stripWhitespace):
+    testInput = getTestInput(day, stripWhitespace)
     if (type(expectedOut) == list):
         print(color("[Check tests] Multiple test cases", "white"))
         if len(expectedOut) == 0:
@@ -62,24 +60,24 @@ def checkAndSubmit(day, ansFn, expectedOut, part):
         return False
 
 
-def answerAndSubmit(day, ansFnA, ansFnB, expectedOutputA, expectedOutputB=None):
+def answerAndSubmit(day, ansFnA, ansFnB, expectedOutputA, expectedOutputB=None, strip=True):
     print(color("Part A ======================================", "white"))
-    if not checkAndSubmit(day, ansFnA, expectedOutputA, "a"):
+    if not checkAndSubmit(day, ansFnA, expectedOutputA, "a", strip):
         return
 
     if expectedOutputB == None:
         return
 
     print(color("Part B ======================================", "white"))
-    checkAndSubmit(day, ansFnB, expectedOutputB, "b")
+    checkAndSubmit(day, ansFnB, expectedOutputB, "b", strip)
 
 
-# Returns test input as an array of ints.
+# Returns test input as an array of strings.
 def getInput(day):
     return aocd.get_data(day=day, year=YEAR, block=True).splitlines()
 
-# Returns test input as an array of ints.
-def getTestInput(dayNumber):
+# Returns test input as an array of strings.
+def getTestInput(dayNumber, stripWhitespace):
     testFileName = "tests/test{}.txt".format(dayNumber)
     with open(testFileName) as f:
-        return [n for n in f.readlines()]
+        return [l.strip() if stripWhitespace else l for l in f.readlines()]

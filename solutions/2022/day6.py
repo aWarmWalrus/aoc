@@ -34,4 +34,5 @@ def solveA(lines):
 def solveB(lines):
     return findStart(lines[0], 14)
 
-answerAndSubmit(day, solveA, solveB, 7, 19)
+if __name__ == "__main__":
+    answerAndSubmit(day, solveA, solveB, 7, 19)

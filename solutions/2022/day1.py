@@ -36,4 +36,5 @@ def solveB(lines):
 
     return sum(cals[-3:])
 
-answerAndSubmit(day, solveA, solveB, 24000, 45000)
+if __name__ == "__main__":
+    answerAndSubmit(day, solveA, solveB, 24000, 45000)

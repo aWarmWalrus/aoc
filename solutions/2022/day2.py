@@ -47,4 +47,5 @@ def solveB(lines):
     }
     return sum([cVal[l] + tVal[l.split()[1]] for l in lines])
 
-answerAndSubmit(day, solveA, solveB, 15, 12)
+if __name__ == "__main__":
+    answerAndSubmit(day, solveA, solveB, 15, 12)

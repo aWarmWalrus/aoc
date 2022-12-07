@@ -64,4 +64,5 @@ def solveB(lines):
         tops += stack.pop()
     return tops
 
-answerAndSubmit(day, solveA, solveB, "CMZ", "MCD")
+if __name__ == "__main__":
+    answerAndSubmit(day, solveA, solveB, "CMZ", "MCD", strip=False)
