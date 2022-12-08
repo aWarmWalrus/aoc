@@ -38,10 +38,10 @@ def solveA(lines):
 def solveB(lines):
     h = len(lines)
     w = len(lines[0])
-    visible = np.zeros((len(lines),len(lines[0])), dtype=int)
+    visible = np.zeros((h,w), dtype=int)
     trees = getTrees(lines, w, h)
 
-    def numViewedTrees(trees, c, r):
+    def viewScore(c, r):
         dirs = [trees[c+1:, r], reversed(trees[:c, r]), trees[c, r+1:], reversed(trees[c, :r])]
         ans = 1
         base = trees[c][r]
@@ -54,7 +54,7 @@ def solveB(lines):
             ans *= num
         return ans
 
-    return max([max([numViewedTrees(trees, c, r) for c in range(w)]) for r in range(h)])
+    return max([max([viewScore(c, r) for c in range(w)]) for r in range(h)])
 
 if __name__ == "__main__":
     answerAndSubmit(day, solveA, solveB, 21, 8)
