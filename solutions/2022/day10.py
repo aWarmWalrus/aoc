@@ -12,50 +12,40 @@ Day       Time    Rank  Score       Time    Rank  Score
 day = 10
 
 def solveA(lines):
-    strength = 0
-    cycle = 0
-    toAdd = 0
+    strength, cycle, addx = 0, 0, 0
     register = 1
-    while len(lines) > 0 or toAdd != 0:
+    while len(lines) > 0 or addx != 0:
         cycle += 1
         if (cycle - 20) % 40 == 0:
             strength += register * cycle
-        if toAdd != 0:
-            register += toAdd
-            toAdd = 0
+        if addx != 0:
+            register += addx
+            addx = 0
             continue
+
         inst = lines.pop(0)
         if inst == "noop":
             continue
-        elif inst.startswith("addx"):
-            toAdd = int(inst.split()[1])
-        else:
-            panic("hmm")
+        addx = int(inst.split()[1])  # inst is addx <val>
     return strength
 
 def solveB(lines):
-    cycle = 0
-    toAdd = 0
-    register = 1
-    while len(lines) > 0 or toAdd != 0:
+    cycle, addx = 0, 0
+    spr = 1
+    while len(lines) > 0 or addx != 0:
         cycle += 1
         pos = cycle % 40
-        if pos <= register + 2 and pos >= register:
-            print("#", end="")
-        else:
-            print(" ", end="")
-        if (cycle % 40) == 0:
-            print()
-
-        if toAdd != 0:
-            register += toAdd
-            toAdd = 0
+        print("#" if pos <= spr + 2 and pos >= spr else " ", \
+            end="" if cycle % 40 != 0 else "\n")
+        if addx != 0:
+            spr += addx
+            addx = 0
             continue
         inst = lines.pop(0)
         if inst == "noop":
             continue
-        # inst.startswith("addx"):
-        toAdd = int(inst.split()[1])
+        addx = int(inst.split()[1])   # inst is addx <val>
+
     return "EHBZLRJR"
 
 if __name__ == "__main__":
