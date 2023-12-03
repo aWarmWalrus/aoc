@@ -21,7 +21,7 @@ def updateHead(pos, dir):
     elif dir == "D":
         return (pos[0], pos[1]-1)
     else:
-        return "BREAK THIS"
+        panic("Unexpected direction", dir)
 
 def manhattanDist(a, b):
     return abs(a[0] - b[0]) + abs(a[1] - b[1])
@@ -43,8 +43,7 @@ def updateTail(pos, head):
     return closest
 
 def solveA(lines):
-    h = (0, 0)
-    t = (0, 0)
+    h, t = (0, 0), (0, 0)
     tHist = set({t})
     for l in lines:
         dir, num = l.split()

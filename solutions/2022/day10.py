@@ -22,11 +22,9 @@ def solveA(lines):
             register += addx
             addx = 0
             continue
-
         inst = lines.pop(0)
-        if inst == "noop":
-            continue
-        addx = int(inst.split()[1])  # inst is addx <val>
+        if inst.startswith("addx"):
+            addx = int(inst.split()[1])
     return strength
 
 def solveB(lines):
@@ -35,17 +33,15 @@ def solveB(lines):
     while len(lines) > 0 or addx != 0:
         cycle += 1
         pos = cycle % 40
-        print("#" if pos <= spr + 2 and pos >= spr else " ", \
+        print("##" if pos <= spr + 2 and pos >= spr else "  ", \
             end="" if cycle % 40 != 0 else "\n")
         if addx != 0:
             spr += addx
             addx = 0
             continue
         inst = lines.pop(0)
-        if inst == "noop":
-            continue
-        addx = int(inst.split()[1])   # inst is addx <val>
-
+        if inst.startswith("addx"):
+            addx = int(inst.split()[1])
     return "EHBZLRJR"
 
 if __name__ == "__main__":
