@@ -1,6 +1,6 @@
 from aoc_util import *
 
-import regex as re
+import regex
 
 """
 Personal Stats:
@@ -14,18 +14,10 @@ day = 1
 def solveA(lines):
     acc = 0
     for l in lines:
-        # v1 = re.match(r"^[A-z\s]*(\d)", l)
-        # v2 = re.match(r"(\d)[A-z]*\r", l)   <- not sure why this doesn't work
-        dig1 = None
-        dig2 = None
-        for c in l:
-            if c.isdigit():
-                dig2 = c
-                if dig1 == None:
-                    dig1 = c
-        if dig1 == None:
+        digits = [int(x) for x in regex.findall(r'(\d)', l)]
+        if len(digits) == 0:
             continue
-        acc += int(dig1 + dig2)
+        acc += digits[0] * 10 + digits[-1]
     return acc
 
 def wordToInt(w):
@@ -47,8 +39,7 @@ def wordToInt(w):
 def solveB(lines):
     acc = 0
     for l in lines:
-        grps = re.findall(r"(\d|one|two|three|four|five|six|seven|eight|nine)", l, overlapped=True)
-        print(grps)
+        grps = regex.findall(r"(\d|one|two|three|four|five|six|seven|eight|nine)", l, overlapped=True)
         acc += wordToInt(grps[0]) * 10 + wordToInt(grps[-1])
 
     return acc
