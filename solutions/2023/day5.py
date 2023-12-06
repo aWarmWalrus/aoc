@@ -33,6 +33,7 @@ def parseInput(lines):
     allMaps.append(sorted(currMap))
     return seeds, allMaps
 
+
 def solveA(lines):
     seeds, maps = parseInput(lines)
     lowestVal = inf
@@ -47,6 +48,7 @@ def solveA(lines):
             lowestVal = curr
     return lowestVal
 
+    
 # start is inclusive, end is not inclusive
 def mapSeedRange(start, end, mapIndex, maps):
     if mapIndex >= len(maps):
