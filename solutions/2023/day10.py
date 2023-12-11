@@ -1,4 +1,5 @@
 from aoc_util import *
+from aoc_algos import *
 
 import numpy as np
 import regex
@@ -9,6 +10,7 @@ import math
 Personal Stats:
       --------Part 1---------   --------Part 2---------
 Day       Time    Rank  Score       Time    Rank  Score
+ 10   00:38:23    2138      0   13:02:31   17554      0
 """
 
 day = 10
@@ -38,12 +40,9 @@ def connects(p, coord):
     maxR, maxC = p.shape
     ps = []
     if p[coord] == 'S':
-        for d in [(-1,0), (1, 0), (0, -1), (0, 1)]:
-            newR, newC = (coord[0]+d[0], coord[1]+d[1])
-            if newC >= maxC  or newC < 0 or newR >= maxR or newR < 0:
-                continue
-            if p[newR, newC] in valid[d]:
-                ps.append((newR, newC))
+        for next, d in validNeighbors(p, coord):
+            if p[next] in valid[d]:
+                ps.append(next)
         return ps
     for d in neighbors[p[coord]]:
         newR, newC = (coord[0]+d[0], coord[1]+d[1])
@@ -93,20 +92,14 @@ def getSection(pipes, pathSet, coord):
     while len(queue) != 0:
         curr = queue.pop()
         section.add(curr)
-        for d in [(-1,0), (1, 0), (0, -1), (0, 1)]:
-            newR, newC = (curr[0]+d[0], curr[1]+d[1])
-            if newC >= maxC or newC < 0 or newR >= maxR or newR < 0:
+        for next, _ in validNeighbors(pipes, curr, fourDirs):
+            if (next in pathSet) or (next in queue) or (next in section):
                 continue
-            if (newR, newC) in pathSet:
-                continue
-            if (newR, newC) in queue:
-                continue
-            if (newR, newC) in section:
-                continue
-            queue.append((newR, newC))
+            queue.append(next)
             if isOuter:
                 continue
-            if newR == 0 or newR == maxR - 1 or newC == 0 or newC == maxC - 1:
+            (r,c) = next
+            if r == 0 or r == maxR - 1 or c == 0 or c == maxC - 1:
                 isOuter = True
     return section, isOuter
 
