@@ -1,4 +1,5 @@
 from aoc_util import *
+from aoc_algos import *
 
 import numpy as np
 
@@ -11,40 +12,29 @@ Day       Time    Rank  Score       Time    Rank  Score
 
 day = 8
 
-def getTrees(lines, w, h):
-    trees = np.zeros((len(lines),len(lines[0])), dtype=int)
-    for c in range(w):
-        for r in range(h):
-            trees[c, r] = int(lines[c][r])
-    return trees
-
-
 def solveA(lines):
-    h = len(lines)
-    w = len(lines[0])
-    visible = np.zeros((h,w), dtype=int)
-    trees = getTrees(lines, w, h)
-    for c in range(w):
-        for r in range(h):
-            if r == 0 or r == h-1 or c == 0 or c == w - 1:
-                visible[c, r] = 1
-                continue
-            sightlines = [trees[:c, r], trees[c+1:, r], trees[c, :r], trees[c, r+1:]]
-            if any([trees[c, r] > max(s) for s in sightlines]):
-                visible[c, r] = 1
+    trees = createNumpy2D(lines, dtype=int)
+    visible = np.zeros(trees.shape, dtype=int)
+    h = trees.shape[0]
+    w = trees.shape[1]
+    for (r, c) in np.ndindex(trees.shape):
+        if r == 0 or r == h-1 or c == 0 or c == w - 1:
+            visible[r,c] = 1
+            continue
+        sightlines = [trees[r, :c], trees[r, c+1:], trees[:r, c], trees[r+1:, c]]
+        if any([trees[r,c] > max(s) for s in sightlines]):
+            visible[r,c] = 1
     return np.sum(visible)
 
 
 def solveB(lines):
-    h = len(lines)
-    w = len(lines[0])
-    visible = np.zeros((h,w), dtype=int)
-    trees = getTrees(lines, w, h)
+    trees = createNumpy2D(lines, dtype=int)
+    visible = np.zeros(trees.shape, dtype=int)
 
-    def viewScore(c, r):
-        dirs = [trees[c+1:, r], reversed(trees[:c, r]), trees[c, r+1:], reversed(trees[c, :r])]
+    def viewScore(r, c):
+        dirs = [trees[r, c+1:], reversed(trees[r, :c]), trees[r+1:, c], reversed(trees[:r, c])]
         ans = 1
-        base = trees[c][r]
+        base = trees[r,c]
         for sightlines in dirs:
             num = 0
             for tree in sightlines:
@@ -54,7 +44,7 @@ def solveB(lines):
             ans *= num
         return ans
 
-    return max([max([viewScore(c, r) for c in range(w)]) for r in range(h)])
+    return max([viewScore(r,c) for (r,c) in np.ndindex(trees.shape)])
 
 if __name__ == "__main__":
     answerAndSubmit(day, solveA, solveB, 21, 8)

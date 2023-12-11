@@ -5,11 +5,14 @@ import math
 
 # If the input is a list of lines that are equal length and to be treated as a
 # grid, then this turns the input into a 2D numpy matrix with string dtype.
-def createNumpy2D(lines):
+def createNumpy2D(lines, dtype=str, transformFn=None):
     h, w = len(lines), len(lines[0])
-    mat = np.zeros((h,w), dtype=str)
+    mat = np.zeros((h,w), dtype=dtype)
     for (r, c) in np.ndindex(h, w):
-        mat[r,c] = lines[r][c]
+        if transformFn == None:
+            mat[r,c] = lines[r][c]
+        else:
+            mat[r,c] = transformFn(lines[r][c])
     return mat
 
 
@@ -35,13 +38,16 @@ def eightDirs():
         yield d
 
 
+# validNeighbors() generates the valid neighbors for a given `coord` in the
+# numpy 2D matrix. Can choose between four directions and eight directions.
+# yields both the direction of travel and the new coordinate.
 def validNeighbors(np2DMatrix, coord, dirFn=fourDirs):
     for d in dirFn():
         maxR, maxC = np2DMatrix.shape
         newR, newC = (coord[0] + d[0], coord[1] + d[1])
         if newC >= maxC  or newC < 0 or newR >= maxR or newR < 0:
             continue
-        yield (newR, newC)
+        yield (newR, newC), d
 
 
 # aStar() performs A* search on a numpy grid, returning the path from
@@ -71,7 +77,7 @@ def aStar(grid, start, end, canTraverseFn, distFn=manDist, neighbors=fourDirs):
                 curr = cameFrom[curr]
             return path
 
-        for next in validNeighbors(grid, curr, dirFn=fourDirs):
+        for next, _  in validNeighbors(grid, curr, dirFn=neighbors):
             if not canTraverseFn(curr, next):
                 continue
 
