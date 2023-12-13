@@ -28,6 +28,11 @@ def manDist(a, b):
     return abs(a[0] - b[0]) + abs(a[1] - b[1])
 
 
+# Euclidean distance (as the crow flies)
+def euclDist(a, b):
+    return math.sqrt((a[0]-b[0])**2 + (a[1]-b[1])**2)
+
+
 def fourDirs():
     for d in [(-1,0), (0,-1), (1,0), (0,1)]:
         yield d
