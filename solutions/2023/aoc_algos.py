@@ -16,6 +16,12 @@ def createNumpy2D(lines, dtype=str, transformFn=None):
     return mat
 
 
+def printArray(arr):
+    print()
+    for r in range(arr.shape[0]):
+        print("".join(arr[r]))
+
+
 # Returns a list of tuples representing the coordinates in np2dMatrix that match
 # `val`
 def findNumpyValue(np2dMatrix, val):
@@ -43,16 +49,21 @@ def eightDirs():
         yield d
 
 
+def isOob(array, coord):
+    maxR, maxC = array.shape
+    return coord[0] >= maxR or coord[0] < 0 or coord[1] >= maxC or coord[1] < 0
+
+
 # validNeighbors() generates the valid neighbors for a given `coord` in the
 # numpy 2D matrix. Can choose between four directions and eight directions.
 # yields both the direction of travel and the new coordinate.
-def validNeighbors(np2DMatrix, coord, dirFn=fourDirs):
+def validNeighbors(array, coord, dirFn=fourDirs):
     for d in dirFn():
-        maxR, maxC = np2DMatrix.shape
-        newR, newC = (coord[0] + d[0], coord[1] + d[1])
-        if newC >= maxC  or newC < 0 or newR >= maxR or newR < 0:
+        maxR, maxC = array.shape
+        newCoord = (coord[0] + d[0], coord[1] + d[1])
+        if isOob(array, newCoord):
             continue
-        yield (newR, newC), d
+        yield newCoord, d
 
 
 # aStar() performs A* search on a numpy grid, returning the path from
