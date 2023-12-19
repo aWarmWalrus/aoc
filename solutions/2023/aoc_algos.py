@@ -87,7 +87,7 @@ def aStar(grid, start, end, canTraverseFn, distFn=manDist, neighbors=fourDirs):
 
         # Reached the goal
         if curr == end:
-            path = deque(end)
+            path = deque()
             while curr != start:
                 path.appendleft(curr)
                 curr = cameFrom[curr]

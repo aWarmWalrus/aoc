@@ -9,6 +9,7 @@ import time
 Personal Stats:
       --------Part 1---------   --------Part 2---------
 Day       Time    Rank  Score       Time    Rank  Score
+ 15   00:05:48    1631      0   00:28:30    1961      0
 """
 
 day = 15
@@ -16,7 +17,7 @@ day = 15
 def parseInput(lines):
     return lines[0].split(',')
 
-    
+
 def hash(l):
     curr = 0
     for c in l:

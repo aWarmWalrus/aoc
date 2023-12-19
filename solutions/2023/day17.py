@@ -30,7 +30,6 @@ def dirName(dir):
 
 def aStarM(grid, start, end, distFn=manDist, neighbors=fourDirs):
     costs = defaultdict(lambda: math.inf)
-    # costs[(start, ] = 0
 
     cameFrom = defaultdict()
     togo = []
@@ -98,24 +97,25 @@ def aStarM2(grid, start, end, distFn=manDist, neighbors=fourDirs):
     costs = defaultdict(lambda: math.inf)
 
     cameFrom = defaultdict()
-    togo = []
-    for next, dir in validNeighbors(grid, start, dirFn=neighbors):
-        cNode = (start, None, 0)
-        accCost = 0
-        for i in range(10):
-            accCost += grid[next]
-            nextNode = (next, dir, i+1)
+    # togo = []
+    # for next, dir in validNeighbors(grid, start, dirFn=neighbors):
+    #     cNode = (start, None, 0)
+    #     accCost = 0
+    #     for i in range(10):
+    #         accCost += grid[next]
+    #         nextNode = (next, dir, i+1)
+    #
+    #         if i >= 3 and accCost < costs[nextNode]:
+    #             costs[nextNode] = accCost
+    #             cameFrom[nextNode] = cNode
+    #             fScore = accCost + distFn(next, end)
+    #             heappush(togo, (fScore, nextNode))
+    #             cNode = nextNode
+    #         next = (next[0] + dir[0], next[1] + dir[1])
+    #         if isOob(grid, next):
+    #             break
 
-            if i >= 3 and accCost < costs[nextNode]:
-                costs[nextNode] = accCost
-                cameFrom[nextNode] = cNode
-                fScore = accCost + distFn(next, end)
-                heappush(togo, (fScore, nextNode))
-                cNode = nextNode
-            next = (next[0] + dir[0], next[1] + dir[1])
-            if isOob(grid, next):
-                break
-
+    togo = [(distFn(start, end), (start, None, 0))]
     while len(togo) > 0:
         fScore, node = heappop(togo)
         curr, dir, sameDir = node
