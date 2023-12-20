@@ -91,13 +91,13 @@ def solveA(lines):
 
 def solveB(lines):
     modules = parseInput(lines)
-    cycles = {}
-    if 'zg' not in modules:
-        # Bypass the test input, go straight to real input.
+    # Bypass the test input (if 'rx' is not in the modules), go straight to real input.
+    if all(['rx' not in m.dests for m in modules.values()]):
         return 0
-    i = 0
-    while len(cycles) < 4:
-        i += 1
+    # The target module is the conjunction that feeds into 'rx'.
+    target = next(filter(lambda m: 'rx' in m.dests, modules.values()))
+    cycles = {}
+    for i in range(1,10000):
         fifo = deque([('broadcaster', 0, "button")])
         while len(fifo) > 0:
             dest, sig, src = fifo.popleft()
@@ -115,14 +115,15 @@ def solveB(lines):
                 nextSig = 0
             elif mod.type == '&':
                 mod.inputs[src] = sig
-                if mod.name == 'zg' and any([v == 1 for v in mod.inputs.values()]):
+                if mod.name == target.name and any([v == 1 for v in mod.inputs.values()]):
                     for k, v in filter(lambda x: x[1] == 1, mod.inputs.items()):
                         cycles[k] = i
-                    print(i, cycles)
+                    if len(cycles) >= 4:
+                        return math.prod(cycles.values())
                 nextSig = 0 if all([v == 1 for v in mod.inputs.values()]) else 1
             for d in mod.dests:
                 fifo.append((d, nextSig, dest))
-    return math.prod(cycles.values())
+    return ":("
 
 
 if __name__ == "__main__":
