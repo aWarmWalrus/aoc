@@ -5,7 +5,7 @@ https://adventofcode.com/
 To run any of the solutions, you need to be in the solutions/ directory because
 that's how I lazily hard coded the code for getting the test file inputs.
 
-# Results for each year
+# Results By Year
 <!-- AOC TILES BEGIN -->
 <h1 align="center">
   2023 - 50 ⭐
