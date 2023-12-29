@@ -11,5 +11,5 @@ repos:
             # Simply remove the comments (#) below for args and the flags you want.
             # args:
             #     - --auto-add-tiles-to-git=amend
-            #     - --language-sorting=jl,kt,py,rs
+                - --language-sorting=jl,kt,py,rs
             #     - --exclude-patterns="2021/*/*.apl,2021/*/*.py,2021/*/*.cpp"
