@@ -3,8 +3,8 @@ repos:
       rev: 0.5.6
       hooks:
           - id: aoc-tiles
-          args:
-              - --auto-add-tiles-to-git=amend
+            args:
+                - --auto-add-tiles-to-git=amend
             # Optionally use these arguments. Auto add tiles to git adds the tiles to git,
             # possibly amends your commit by creating the tile images and updating the README.
             # Language sorting shows the preference of the order of the languages to use.
