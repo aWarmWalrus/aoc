@@ -104,23 +104,20 @@ def solveB(lines):
             if dest not in modules:
                 continue
             mod = modules[dest]
-            nextSig = 0
-            # Do logic for figuring out whether to send low or high
+            nextSig = 0   # If broadcaster, nextSig is 0.
             if mod.type == '%':
                 if sig == 1:
                     continue
                 mod.val ^= 1
                 nextSig = mod.val
-            elif mod.name == "broadcaster":
-                nextSig = 0
             elif mod.type == '&':
                 mod.inputs[src] = sig
+                nextSig = 0 if all([v == 1 for v in mod.inputs.values()]) else 1
                 if mod.name == target.name and any([v == 1 for v in mod.inputs.values()]):
                     for k, v in filter(lambda x: x[1] == 1, mod.inputs.items()):
                         cycles[k] = i
                     if len(cycles) >= 4:
                         return math.prod(cycles.values())
-                nextSig = 0 if all([v == 1 for v in mod.inputs.values()]) else 1
             for d in mod.dests:
                 fifo.append((d, nextSig, dest))
     return ":("
