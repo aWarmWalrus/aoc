@@ -6,6 +6,7 @@ repos:
             args:
                 - --auto-add-tiles-to-git=amend
                 - --verbose
+                - --exclude-patterns="*/*/*.dot,*/*/*.svg"
             # Optionally use these arguments. Auto add tiles to git adds the tiles to git,
             # possibly amends your commit by creating the tile images and updating the README.
             # Language sorting shows the preference of the order of the languages to use.
