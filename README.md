@@ -185,4 +185,3 @@ that's how I lazily hard coded the code for getting the test file inputs.
   <img src=".aoc_tiles/tiles/2021/18.png" width="161px">
 </a>
 <!-- AOC TILES END -->
-.
