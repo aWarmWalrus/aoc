@@ -1,3 +1,5 @@
 __pycache__/
 *.py[cod]
 *$py.class
+.aoc_tiles/*
+!.aoc_tiles/tiles/
